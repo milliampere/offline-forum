@@ -1,4 +1,4 @@
-# offline-forum
+# offline-forum &middot; [![Build Status](https://travis-ci.org/milliampere/offline-forum.svg?branch=master)](https://travis-ci.org/milliampere/offline-forum) [![Coverage Status](https://coveralls.io/repos/github/milliampere/offline-forum/badge.svg?branch=master)](https://coveralls.io/github/milliampere/offline-forum?branch=master)
 
 >Example app built with [`create-react-app`](https://github.com/facebookincubator/create-react-app) for integration and snapshot testing. The app is a forum with posts and comments that uses `localStorage`. It also has a bot that responds with delay. **CSS-framework is [Tailwind](https://tailwindcss.com/)**
 
