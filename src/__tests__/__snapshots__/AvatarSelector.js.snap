@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should display the zac avatar 1`] = `
+<img
+  alt="Avatar"
+  className="w-12 rounded-full"
+  src="zac.png"
+  style={
+    Object {
+      "transform": "translateY(20px)",
+    }
+  }
+/>
+`;
