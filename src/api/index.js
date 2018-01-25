@@ -82,7 +82,7 @@ export function filterComments(comments, id){
 }
 
 export function removeComment(commentId) {
-  const comments = fetchAllPosts();
+  const comments = fetchAllCommments();
   const filteredComments = comments.filter(comment => comment.id !== commentId);
   storeCommentObject(filteredComments);
 }
