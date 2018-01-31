@@ -3,7 +3,8 @@ import { render, mount } from 'enzyme';
 import App from '../components/App';
 
 test('renders the app', () => {
-  render(<App />);
+  const wrapper = render(<App />);
+  expect(wrapper).toBeDefined();
 });
 
 it('should change page from home to bot', () => {
