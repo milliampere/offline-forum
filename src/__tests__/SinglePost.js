@@ -4,42 +4,44 @@ import SinglePost from '../components/SinglePost';
 
 describe('<SinglePost />', () => {
 
-  let wrapper;
   let handleClick;
+  let wrapper;
 
   beforeEach(() => {
     handleClick = jest.fn();
     wrapper = mount(
       <SinglePost 
-        title="Rubrik" 
-        content="Text" 
+        title="TestTitle" 
+        content="TestContent" 
         id="123" 
-        author="Zac" 
-        currentPersona="Zac" 
+        author="TestPerson" 
+        currentPersona="TestPerson" 
         date="2018-01-01" 
         onClick={handleClick}
-      >x
-      </SinglePost>);
+      />);
   });
 
-  it('should display remove button when author and persona is the same', () => {
+  it('should display button when author === persona', () => {
+    wrapper.setProps({ author: 'OnePerson' });
+    wrapper.setProps({ currentPersona: 'OnePerson' });
     expect(wrapper.find('Button').length).toEqual(1);
   })
 
-  it('should not display remove button when author and persona is different', () => {
-    wrapper.setProps({ currentPersona: 'Morgana' });
+  it('should not display button when author !== persona', () => {
+    wrapper.setProps({ author: 'OnePerson' });
+    wrapper.setProps({ currentPersona: 'AnotherPerson' });
     expect(wrapper.find('Button').length).toEqual(0);
   })
 
-  it('should call remove callback when button is clicked', () => {
-    expect(handleClick.mock.calls.length).toEqual(0);
+  it('should call click with id', () => {
+    expect(handleClick).toHaveBeenCalledTimes(0);
     const button = wrapper.find('[data-test="button"]');
     button.simulate('click');
-    expect(handleClick.mock.calls.length).toEqual(1);
+    expect(handleClick).toHaveBeenCalledWith('123');
   }) 
 
-  afterEach(() => {
-    handleClick.mockReset();
-  });
+  it('should render a post', () => {
+    expect(wrapper).toMatchSnapshot();
+  })
 
 })
