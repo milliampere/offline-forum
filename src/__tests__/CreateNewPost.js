@@ -31,10 +31,6 @@ describe('submit tests', () => {
     wrapper.find('form').simulate('submit');
   });
 
-  afterEach(() => {
-    localStorage.clear();
-  })
-
   it('should call updatePosts', () => {
     expect(fakeUpdateFunction).toHaveBeenCalledTimes(1);
   });
