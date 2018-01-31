@@ -1,6 +1,6 @@
-import * as api from '../api';
-import fakePosts from '../fakePosts';
-import fakeComments from '../fakeComments';
+import * as api from '../../api';
+import fakePosts from '../../fakePosts';
+import fakeComments from '../../fakeComments';
 
 beforeEach(() =>{
   localStorage.clear();
