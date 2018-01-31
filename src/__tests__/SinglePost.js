@@ -22,8 +22,6 @@ describe('<SinglePost />', () => {
   });
 
   it('should display button when author === persona', () => {
-    wrapper.setProps({ author: 'OnePerson' });
-    wrapper.setProps({ currentPersona: 'OnePerson' });
     expect(wrapper.find('Button').length).toEqual(1);
   })
 
@@ -35,13 +33,13 @@ describe('<SinglePost />', () => {
 
   it('should call click with id', () => {
     expect(handleClick).toHaveBeenCalledTimes(0);
-    const button = wrapper.find('[data-test="button"]');
-    button.simulate('click');
+    wrapper.find('[data-test="button"]').simulate('click');
     expect(handleClick).toHaveBeenCalledWith('123');
   }) 
 
-  it('should render a post', () => {
+  it('should render the post', () => {
     expect(wrapper).toMatchSnapshot();
   })
 
 })
+
