@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<SinglePost /> should render a post 1`] = `
+exports[`<SinglePost /> should render the post 1`] = `
 <SinglePost
   author="TestPerson"
   content="TestContent"
