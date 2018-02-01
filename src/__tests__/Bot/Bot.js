@@ -1,39 +1,67 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import Bot from '../../components/Bot/Bot';
+
+jest.useFakeTimers();
+
+function flushAllPromises() {
+  return new Promise(resolve => setImmediate(resolve));
+}
 
 describe('<Bot/>', () => {
 
   it('should put user message in state', () => {
-    const wrapper = shallow(<Bot />);
-    wrapper.instance().onSubmit('Hello');
+    const wrapper = mount(<Bot />);
+    wrapper.find('MessageForm').simulate('submit');
     expect(wrapper.state().messages[0]).toEqual(expect.objectContaining({
-      message: 'Hello',
+      message: expect.any(String),
       bot: false
     }));
-  })
-
-  it('should render a message', ()=> {
-    const wrapper = mount(<Bot />);
-    wrapper.instance().onSubmit('Hello, how are you?');
-    expect(wrapper.html()).toContain('Hello, how are you?');
   });
 
+  it('should render user message', ()=> {
+    const wrapper = mount(<Bot />);
+    wrapper.find('MessageForm').simulate('submit');
+    expect(wrapper.find('Message').prop('bot')).toBe(false);
+  });
 
-})
+  it('should put bot reply in state', () => {
+    const wrapper = mount(<Bot />);
+    wrapper.find('MessageForm').simulate('submit');
+    jest.runAllTimers();
+    return flushAllPromises().then(() => {
+      expect(wrapper.state().messages[1]).toEqual(expect.objectContaining({
+        message: expect.any(String),
+        bot: true
+      }));
+    })
+  })
 
-describe('bot reply integration', () => {
+  it('should render bot reply message', () => {
+    const wrapper = mount(<Bot />);
+    wrapper.find('MessageForm').simulate('submit');
+    jest.runAllTimers();
+    return flushAllPromises().then(() => {
+      const reply = wrapper.state().messages[1].message;
+      expect(wrapper.html()).toContain(reply);
+    })
+  })
 
-  function flushAllPromises() {
-    return new Promise(resolve => setImmediate(resolve));
-  }
+  test('typing indicator', () => {
+    const wrapper = mount(<Bot />);
+    wrapper.instance().sendReply();  
+    jest.runAllTimers();  
+    expect(wrapper.state('typing')).toBe(true);
+    return flushAllPromises().then(() => {
+      expect(wrapper.state('typing')).toBe(false);
+    });
+  })
 
-  const wrapper = mount(<Bot />);
-  jest.useFakeTimers();
-  wrapper.instance().sendReply();
-  jest.runAllTimers();
-
-  it('should get reply from api and put it in state', () => {
+  it('should get bot reply from api and put it in state', () => {
+    const wrapper = mount(<Bot />);
+    jest.useFakeTimers();
+    wrapper.instance().sendReply();
+    jest.runAllTimers();
     return flushAllPromises().then(() => {
       expect(wrapper.state().messages[0]).toEqual(expect.objectContaining({
         message: expect.any(String),
@@ -42,10 +70,5 @@ describe('bot reply integration', () => {
     });
   })
 
-  it('should render reply', () => {
-    const reply = wrapper.state().messages[0].message;
-    expect(wrapper.html()).toContain(reply);
-  })
-
-
 })
+
