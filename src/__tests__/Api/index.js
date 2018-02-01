@@ -43,6 +43,12 @@ describe('Posts', () => {
     expect(result).toHaveLength(3);
   })
 
+  it('should return an empty array', () => {
+    localStorage.clear();
+    const result = api.fetchAllPosts();
+    expect(result).toEqual([]);
+  })
+
   it('should store post objects in local storage', () => {
     localStorage.clear();
     expect(localStorage.getItem('posts')).toBeFalsy();
